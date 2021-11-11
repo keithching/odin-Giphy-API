@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Working with API</title>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+
+</head>
+<body>
+  <img src="#">
+  <input type="text" placeholder="search for gif" id="searchBox">
+  <button id="refresh">Refresh for a New One</button>
+  <script>
+
+    let API_key = 'rYAIEsRDTqReVZgRoTQ1fM5i5B9Qk0Hz';
+    let keyword = 'cat'; // default fetch data keyword
+
+    function fetchData() {
+        fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${API_key}&s=${keyword}`, {mode: 'cors'})
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                img.src = response.data.images.original.url;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    const img = document.querySelector('img');
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchData();
+    });
+
+    const searchBox = document.querySelector('#searchBox');
+    searchBox.addEventListener('change', () => {
+        keyword = searchBox.value; // update the keyword for fetch data
+        fetchData();
+    });
+
+    const refreshButton = document.querySelector('#refresh');
+    refreshButton.addEventListener('click', () => {
+        fetchData();
+    });
+
+
+  </script>
+</body>
+</html>
